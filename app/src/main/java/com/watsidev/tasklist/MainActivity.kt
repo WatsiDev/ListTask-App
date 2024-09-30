@@ -28,10 +28,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -39,8 +37,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -60,7 +56,6 @@ import androidx.compose.ui.unit.sp
 import com.watsidev.tasklist.ui.theme.TaskListTheme
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -68,11 +63,6 @@ class MainActivity : ComponentActivity() {
             TaskListTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-//                    topBar = {
-//                        TopAppBar(
-//                            title = { Text(text = "Task App") } // Título de la barra superior
-//                        )
-//                    }
                 ) { innerPadding ->
                     TaskList(
                         modifier = Modifier.padding(innerPadding)
@@ -85,7 +75,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CardText(task: String, onDelete: () -> Unit, editTask: () -> Unit, onComplete: () -> Boolean) {
+fun CardText(task: String, onDelete: () -> Unit, onComplete: () -> Boolean) {
     var checkedBox by remember {
         mutableStateOf(Icons.Filled.Check)
     }
@@ -144,7 +134,6 @@ fun CardText(task: String, onDelete: () -> Unit, editTask: () -> Unit, onComplet
 fun CardTextComplete(
     task: String,
     onDelete: () -> Unit,
-    editTask: () -> Unit,
     inComplete: () -> Unit
 ) {
     var checkedBox by remember {
@@ -200,7 +189,7 @@ fun CardTextComplete(
 
 @Composable
 fun TaskList(modifier: Modifier) {
-    var TaskAdd = remember {
+    val TaskAdd = remember {
         mutableStateListOf("Tarea ejemplo.")
     }
 
@@ -208,7 +197,7 @@ fun TaskList(modifier: Modifier) {
         mutableStateOf("")
     }
 
-    var taskComplete = remember {
+    val taskComplete = remember {
         mutableStateListOf("Aqui se añaden las tareas completadas")
     }
 
@@ -268,7 +257,6 @@ fun TaskList(modifier: Modifier) {
                 CardText(
                     task = item,
                     onDelete = { TaskAdd.remove(item) },
-                    editTask = { },
                     onComplete = {
                         taskComplete.add(item)
                         TaskAdd.remove(item)
@@ -295,7 +283,6 @@ fun TaskList(modifier: Modifier) {
                 CardTextComplete(
                     task = item,
                     onDelete = { taskComplete.remove(item) },
-                    editTask = { },
                     inComplete = {
                         TaskAdd.add(item)
                         taskComplete.remove(item)
