@@ -12,8 +12,8 @@ ListTask App es una aplicación de gestión de tareas simple y eficiente, diseñ
 
 ## Capturas de pantalla
 
-![screenshots](Screenshots/mockup)
-![screenshots](Screenshots/mockup1)
+![screenshots](Screenshots/mockup.png)
+![screenshots](Screenshots/mockup1.png)
 
 ## Instalación
 
